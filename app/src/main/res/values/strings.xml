@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RuwayTask</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addTodo.message.title">Add Task</string>
+
+    <string name="addtodo.message.title">Add Task</string>
+    <string name="addtodo.message.add">Add</string>
+    <string name="addtodo.message.cancel">Cancel</string>
+</resources>
