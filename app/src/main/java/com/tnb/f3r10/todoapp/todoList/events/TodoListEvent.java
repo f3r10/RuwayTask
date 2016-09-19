@@ -12,6 +12,7 @@ public class TodoListEvent {
     private List<Todo> todo;
     private String error;
     private int type;
+    private Todo todoUpdated;
 
     public final static int READ_EVENT = 0;
     public final static int UPDATE_EVENT = 1;
@@ -41,5 +42,13 @@ public class TodoListEvent {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Todo getTodoUpdated() {
+        return todoUpdated;
+    }
+
+    public void setTodoUpdated(Todo todoUpdated) {
+        this.todoUpdated = todoUpdated;
     }
 }

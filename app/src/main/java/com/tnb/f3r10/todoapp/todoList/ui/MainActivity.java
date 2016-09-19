@@ -1,6 +1,7 @@
 package com.tnb.f3r10.todoapp.todoList.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -10,18 +11,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.tnb.f3r10.todoapp.R;
-import com.tnb.f3r10.todoapp.addTodo.AddTodoFragment;
+import com.tnb.f3r10.todoapp.addTodo.ui.AddTodoFragment;
 import com.tnb.f3r10.todoapp.model.Todo;
+import com.tnb.f3r10.todoapp.todoDetail.ui.TodoDetailActivity;
 import com.tnb.f3r10.todoapp.todoList.ui.adapter.DialogFragmentCloseListener;
+import com.tnb.f3r10.todoapp.todoList.ui.adapter.OnClickListener;
 import com.tnb.f3r10.todoapp.todoList.ui.adapter.OnItemClickListener;
 import com.tnb.f3r10.todoapp.todoList.TodoListPresenter;
 import com.tnb.f3r10.todoapp.todoList.TodoListPresenterImpl;
 import com.tnb.f3r10.todoapp.todoList.ui.adapter.TodoListAdapter;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements OnItemClickListener, TodoListView, DialogFragmentCloseListener {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener, TodoListView, DialogFragmentCloseListener, OnClickListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     private void setUpAdapter() {
-        adapter = new TodoListAdapter(new ArrayList<Todo>(), this);
+        adapter = new TodoListAdapter(new ArrayList<Todo>(), this, this);
     }
 
     private void setUpToolbar() {
@@ -80,12 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public void onItemClick(Todo todo) {
-        Bundle args = new Bundle();
-        AddTodoFragment addTodoFragment = new AddTodoFragment();
-        args.putString("ID" , todo.getId());
-        args.putString("TITLE" , todo.getTodoName());
-        addTodoFragment.setArguments(args);
-        addTodoFragment.show(getSupportFragmentManager(), getString(R.string.addTodo_message_title));
+
+        navigateToDetailTodo(todo);
     }
 
     @Override
@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     @OnClick(R.id.fab)
     public void addTodo() {
+        /*Bundle args = new Bundle();
+        AddTodoFragment addTodoFragment = new AddTodoFragment();
+        args.putString("ID" , todo.getId());
+        args.putString("TITLE" , todo.getTodoName());
+        addTodoFragment.setArguments(args);
+        addTodoFragment.show(getSupportFragmentManager(), getString(R.string.addTodo_message_title));*/
         new AddTodoFragment().show(getSupportFragmentManager(), getString(R.string.addTodo_message_title));
     }
 
@@ -119,6 +125,13 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public void setTodos(List<Todo> data) {
         adapter.setTodos(data);
+    }
+
+    @Override
+    public void updateView(Todo todo) {
+        todoListPresenter.getTodos();
+        String statusText = todo.getStatus() ? "COMPLETED" : "TO-DO";
+        showSnackBar("Task " + todo.getTodoName() + ": " + statusText);
     }
 
     private void showSnackBar(String msg) {
@@ -146,5 +159,23 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public void addTodoActionFinish() {
         todoListPresenter.getTodos();
+    }
+
+    @Override
+    public void updateTodoActionFinish(Todo todo) {
+
+    }
+
+    private void navigateToDetailTodo(Todo todo){
+        Intent mIntent = new Intent(this, TodoDetailActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("TODO_KEY", Parcels.wrap(todo));
+        mIntent.putExtras(mBundle);
+        startActivity(mIntent);
+    }
+
+    @Override
+    public void onCheckboxClick(Todo todo, boolean status) {
+        todoListPresenter.updateStatusTodoTask(todo.getId(), status);
     }
 }

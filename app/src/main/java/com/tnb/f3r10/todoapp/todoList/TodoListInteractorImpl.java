@@ -22,4 +22,9 @@ public class TodoListInteractorImpl implements TodoListInteractor {
     public void removeTodo(Todo todo) {
         repository.removeTodo(todo);
     }
+
+    @Override
+    public void updateStatusTodoTask(String id, boolean status) {
+        repository.updateStatusTodoTask(id, status);
+    }
 }

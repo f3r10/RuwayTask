@@ -1,10 +1,15 @@
 package com.tnb.f3r10.todoapp.addTodo;
 
+import android.util.Log;
+
 import com.tnb.f3r10.todoapp.addTodo.events.AddTodoEvent;
+import com.tnb.f3r10.todoapp.addTodo.ui.AddTodoView;
 import com.tnb.f3r10.todoapp.libs.EventBus;
 import com.tnb.f3r10.todoapp.libs.GreenRobotEventBus;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Date;
 
 /**
  * Created by f3r10 on 17/9/16.
@@ -33,12 +38,22 @@ public class AddTodoPresenterImpl implements AddTodoPresenter {
     }
 
     @Override
-    public void addTodoTask(String task, String id) {
+    public void addTodoTask(String nameTask, Date dueDate, String taskNotes, int priority, boolean completed) {
         if(view != null){
             view.hideInput();
             view.showProgress();
         }
-        interactor.addTodoTask(task, id);
+        interactor.addTodoTask(nameTask, dueDate, taskNotes, priority, completed);
+    }
+
+    @Override
+    public void updateTodoTask(String nameTask, Date dueDate, String taskNotes, int priority, String id) {
+        if(view != null){
+            view.hideInput();
+            view.showProgress();
+        }
+
+        interactor.updateTodoTask(nameTask, dueDate, taskNotes, priority, id);
     }
 
     @Override
@@ -52,7 +67,13 @@ public class AddTodoPresenterImpl implements AddTodoPresenter {
         if(event.isError()){
             view.errorAddTodo();
         }else{
-            view.succesAddTodo();
+            if(event.isUpdate()){
+                Log.d("Update", "is updated");
+                view.succesUpdateTodo(event.getTodo());
+            }else{
+                view.succesAddTodo();
+            }
+
         }
     }
 }

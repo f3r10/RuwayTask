@@ -14,5 +14,6 @@ public interface TodoListView {
     void showError(String msg);
 
     void setTodos(List<Todo> data);
+    void updateView(Todo todo);
 
 }

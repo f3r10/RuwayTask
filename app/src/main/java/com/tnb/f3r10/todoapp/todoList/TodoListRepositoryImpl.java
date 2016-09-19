@@ -1,6 +1,8 @@
 package com.tnb.f3r10.todoapp.todoList;
 
 
+import android.util.Log;
+
 import com.tnb.f3r10.todoapp.libs.GreenRobotEventBus;
 import com.tnb.f3r10.todoapp.model.Todo;
 import com.tnb.f3r10.todoapp.todoList.events.TodoListEvent;
@@ -42,9 +44,22 @@ public class TodoListRepositoryImpl implements TodoListRepository {
 
     public void getTodos() {
         RealmQuery<Todo> query = realm.where(Todo.class);
-        RealmResults<Todo> todos = query.findAll();
+        RealmResults<Todo> todos = query.findAll().sort("priority");
         post(todos);
 
+    }
+
+    @Override
+    public void updateStatusTodoTask(String id, boolean status) {
+        Todo todo = realm.where(Todo.class).equalTo("id", id).findFirst();
+        if(todo !=null){
+            realm.beginTransaction();
+            todo.setStatus(status);
+            realm.commitTransaction();
+            post(todo);
+        }else{
+            post("Unable to update status task", TodoListEvent.ERROR_EVENT);
+        }
     }
 
     private void post(String errorMsg, int errorType){
@@ -58,6 +73,13 @@ public class TodoListRepositoryImpl implements TodoListRepository {
         TodoListEvent event = new TodoListEvent();
         event.setType(TodoListEvent.READ_EVENT);
         event.setTodo(todos);
+        eventBus.post(event);
+    }
+
+    private void post(Todo todo){
+        TodoListEvent event = new TodoListEvent();
+        event.setType(TodoListEvent.UPDATE_EVENT);
+        event.setTodoUpdated(todo);
         eventBus.post(event);
     }
 

@@ -16,5 +16,6 @@ public interface TodoListPresenter {
     void removedTodo(Todo todo);
 
     void getTodos();
+    void updateStatusTodoTask(String id, boolean status);
 
 }

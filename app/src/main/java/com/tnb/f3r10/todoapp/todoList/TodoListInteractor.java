@@ -9,4 +9,6 @@ public interface TodoListInteractor {
 
     void getTodos();
     void removeTodo(Todo todo);
+
+    void updateStatusTodoTask(String id, boolean status);
 }

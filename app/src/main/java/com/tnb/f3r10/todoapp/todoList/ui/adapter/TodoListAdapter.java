@@ -1,5 +1,6 @@
 package com.tnb.f3r10.todoapp.todoList.ui.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,12 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
 
     private List<Todo> todoList;
     private OnItemClickListener onItemClickListener;
+    private OnClickListener onClickListener;
 
-    public TodoListAdapter(List<Todo> todoList, OnItemClickListener onItemClickListener) {
+    public TodoListAdapter(List<Todo> todoList, OnItemClickListener onItemClickListener, OnClickListener onClickListener) {
         this.todoList = todoList;
         this.onItemClickListener = onItemClickListener;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -41,15 +44,33 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Todo item = todoList.get(position);
         holder.setClickListener(item, onItemClickListener);
+        holder.myListener(item, onClickListener);
         String name = item.getTodoName();
         Date date = item.getTodoDate();
         Boolean status = item.getStatus();
+        String priorityText = "H";
+        int colorPriority = Color.RED;
+        switch (item.getPriority()){
+            case Todo.HIGH:
+                colorPriority = Color.RED;
+                priorityText = "H";
+                break;
+            case Todo.MEDIUM:
+                colorPriority = Color.GREEN;
+                priorityText = "M";
+                break;
+            case Todo.LOW:
+                colorPriority = Color.BLUE;
+                priorityText = "L";
+        }
 
         String formatDate = DateFormat.getDateInstance().format(date);
 
         holder.txtName.setText(name);
         holder.txtDate.setText(formatDate);
         holder.checkboxItem.setChecked(status);
+        holder.txtPriority.setText(priorityText);
+        holder.txtPriority.setBackgroundColor(colorPriority);
 
 
     }
@@ -93,14 +114,25 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
         TextView txtName;
         @Bind(R.id.txtDate)
         TextView txtDate;
-        @Bind(R.id.txtStatus)
-        TextView txtStatus;
+        @Bind(R.id.txtPriority)
+        TextView txtPriority;
 
         private View view ;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.view = itemView;
+        }
+
+        private void myListener(final Todo todo, final OnClickListener listener){
+            checkboxItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    listener.onCheckboxClick(todo, checkboxItem.isChecked());
+                }
+            });
+
         }
 
         private void setClickListener(final Todo todo, final OnItemClickListener listener){
@@ -110,6 +142,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
                     listener.onItemClick(todo);
                 }
             });
+
+
+
 
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

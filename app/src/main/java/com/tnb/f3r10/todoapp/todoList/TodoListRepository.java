@@ -9,4 +9,5 @@ public interface TodoListRepository {
 
     void removeTodo(Todo todo);
     void getTodos();
+    void updateStatusTodoTask(String id, boolean status);
 }

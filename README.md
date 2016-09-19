@@ -4,7 +4,7 @@
 
 Submitted by: **Fernando Ledesma Pérez**
 
-Time spent: **3** hours spent in total
+Time spent: **9** hours spent in total
 
 ## User Stories
 
@@ -16,29 +16,36 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
+* [ ] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
 * [X] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
-* [ ] Add support for completion due dates for todo items (and display within listview item)
+* [X] Add support for completion due dates for todo items (and display within listview item)
 * [X] Use a [DialogFragment](http://guides.codepath.com/android/Using-DialogFragment) instead of new Activity for editing items
-* [ ] Add support for selecting the priority of each todo item (and display in listview item)
+* [X] Add support for selecting the priority of each todo item (and display in listview item)
 * [X] Tweak the style improving the UI / UX, play with colors, images or backgrounds
 
 The following **additional** features are implemented:
 
 * [X] MVP + Clean Code!
 * [X] Persist the todo items [into REALM](https://github.com/realm/realm-java) instead of a text file or SQLite
+* [X] Eventbus [into EventBus](https://github.com/greenrobot/EventBus) for simplifies communication
+* [X] Parceler [into Parceler](https://github.com/johncarl81/parceler) for made easy through code generation
+* [X] RecyclerView instead ListView
 
 ## Video Walkthrough 
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of implemented user stories v1:
 
-<img src='http://i.imgur.com/VeUhTko.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/VeUhTko.gif' title='Video Walkthrough' width='' alt='Video Walkthrough RuwayTask v1' />
+
+Here's a walkthrough of implemented user stories v2:
+
+<img src='http://i.imgur.com/Hy0nq8W.gif' title='Video Walkthrough' width='' alt='Video Walkthrough RuwayTask v2' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I was suffering with the Dates
 
 ## License
 

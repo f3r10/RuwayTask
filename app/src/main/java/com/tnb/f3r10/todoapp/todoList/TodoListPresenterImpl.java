@@ -53,6 +53,9 @@ public class TodoListPresenterImpl implements TodoListPresenter {
                     view.hideProgress();
                     view.showError(event.getError());
                     break;
+                case TodoListEvent.UPDATE_EVENT:
+                    view.hideProgress();
+                    view.updateView(event.getTodoUpdated());
             }
         }
     }
@@ -73,5 +76,13 @@ public class TodoListPresenterImpl implements TodoListPresenter {
             view.showProgress();
         }
         interactor.getTodos();
+    }
+
+    @Override
+    public void updateStatusTodoTask(String id, boolean status) {
+        if( view != null){
+            view.showProgress();
+        }
+        interactor.updateStatusTodoTask(id, status);
     }
 }

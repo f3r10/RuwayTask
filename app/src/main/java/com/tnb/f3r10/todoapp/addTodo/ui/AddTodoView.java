@@ -1,4 +1,4 @@
-package com.tnb.f3r10.todoapp.addTodo;
+package com.tnb.f3r10.todoapp.addTodo.ui;
 
 import com.tnb.f3r10.todoapp.model.Todo;
 
@@ -13,5 +13,6 @@ public interface AddTodoView {
     void hideInput();
     void succesAddTodo();
     void errorAddTodo();
+    void succesUpdateTodo(Todo todo);
 
 }

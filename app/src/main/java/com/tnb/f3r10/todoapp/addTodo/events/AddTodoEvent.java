@@ -9,7 +9,14 @@ import java.util.List;
  */
 public class AddTodoEvent {
 
+
+
+    private Todo todo;
+
     boolean error = false;
+
+
+    boolean isUpdate = false;
 
     public boolean isError() {
         return error;
@@ -18,4 +25,21 @@ public class AddTodoEvent {
     public void setError(boolean error) {
         this.error = error;
     }
+
+    public Todo getTodo() {
+        return todo;
+    }
+
+    public void setTodo(Todo todo) {
+        this.todo = todo;
+    }
+
+    public boolean isUpdate() {
+        return isUpdate;
+    }
+
+    public void setUpdate(boolean update) {
+        isUpdate = update;
+    }
+
 }
