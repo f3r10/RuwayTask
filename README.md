@@ -45,7 +45,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-I was suffering with the Dates
+
+**TO-DO**
+* [ ] Implementing Dagger-2 [into DAGGER](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
+* [ ] Implementing Unit testing with Robolectric [into Robolectric](https://github.com/codepath/android_guides/wiki/Unit-Testing-with-Robolectric)
 
 ## License
 
